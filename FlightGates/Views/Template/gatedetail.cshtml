@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <a href="#/gates">List of gates</a>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="h2">
+            Gate <span ng-bind="Gate.Id"></span>
+        </div>
+        <span ng-show="Gate != null && Gate.Flights == 0">Gate has no flights scheduled.</span>
+        <table class="table table-striped" ng-show="Gate != null && Gate.Flights.length > 0">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Arrival Datetime</th>
+                <th>Departure Datetime</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="flight in Gate.Flights">
+                <td>{{flight.Id}}</td>
+                <td>{{flight.ArrivalDateTime}}</td>
+                <td>{{flight.DepartureDateTime}}</td>
+                <td><a href="#/flights/{{flight.Id}}">Change</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-default" href="#/flights/create/{{Gate.Id}}">Schedule a flight</a>
+    </div>
+</div>

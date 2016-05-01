@@ -1,0 +1,14 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <span class="h2">List of gates</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="list-group">
+            <div class="list-group-item" ng-repeat="gate in Gates">
+                <a href="#/gates/{{gate.Id}}">Gate <span ng-bind="gate.Id"></span></a>
+            </div>
+        </div>        
+    </div>
+</div>
