@@ -33,8 +33,7 @@ namespace FlightGates
 
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterApiControllers(typeof(MvcApplication).Assembly);
-
-            builder.RegisterType<GateService>().As<IGateService>().InstancePerRequest();
+            builder.RegisterType<ScheduleService>().As<IScheduleService>().InstancePerRequest();
             builder.RegisterType<GatesRepository>().As<IGatesRepository>().InstancePerRequest();
             builder.RegisterType<FlightsRepository>().As<IFlightsRepository>().InstancePerRequest();
             builder.RegisterType<DataContext>().As<IDataContext>().SingleInstance();

@@ -7,18 +7,18 @@ namespace FlightGates.Controllers.Api
     [RoutePrefix("api/Flights")]
     public class FlightsController : ApiController
     {
-        private readonly IGateService _gateService;
+        private readonly IScheduleService _scheduleService;
 
-        public FlightsController(IGateService gateService)
+        public FlightsController(IScheduleService scheduleService)
         {
-            _gateService = gateService;
+            _scheduleService = scheduleService;
         }
 
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult Get(int id)
         {
-            var flight = _gateService.GetFlight(id);
+            var flight = _scheduleService.GetFlight(id);
             if (flight == null) return NotFound();
 
             var model = new {flight.Id, flight.ArrivalDateTime, flight.DepartureDateTime, GateId = flight.Gate.Id};
@@ -29,14 +29,14 @@ namespace FlightGates.Controllers.Api
         [Route("{id}")]
         public IHttpActionResult Post(int id, FlightModel model)
         {
-            var result = _gateService.UpdateFlight(id, model.GateId, model.ArrivalDateTime, model.DepartureDateTime);
+            var result = _scheduleService.UpdateFlight(id, model.GateId, model.ArrivalDateTime, model.DepartureDateTime);
             return Ok(result);
         }
 
         [HttpPut]
         public IHttpActionResult Put(FlightModel model)
         {
-            var result = _gateService.ScheduleFlight(model.GateId, model.ArrivalDateTime, model.DepartureDateTime);
+            var result = _scheduleService.ScheduleFlight(model.GateId, model.ArrivalDateTime, model.DepartureDateTime);
             return Ok(result);
         }
 
@@ -44,7 +44,7 @@ namespace FlightGates.Controllers.Api
         [Route("{id}")]
         public IHttpActionResult Delete(int id)
         {
-            var result = _gateService.CancelFlight(id);
+            var result = _scheduleService.CancelFlight(id);
             return Ok(result);
         }
     }

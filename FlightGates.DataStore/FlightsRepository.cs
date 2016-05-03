@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FlightGates.DataStore.Entities;
 
 namespace FlightGates.DataStore
@@ -8,6 +9,7 @@ namespace FlightGates.DataStore
         Flight GetById(int id);
         void Delete(Flight flight);
         void Add(Flight flight);
+        IList<Flight> GetAll();
     }
 
     public class FlightsRepository : IFlightsRepository
@@ -33,6 +35,11 @@ namespace FlightGates.DataStore
         {
             flight.Id = ++_dataContext.FlightCount;
             _dataContext.Flights.Add(flight);
+        }
+
+        public IList<Flight> GetAll()
+        {
+            return _dataContext.Flights;
         }
     }
 }

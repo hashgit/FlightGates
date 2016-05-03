@@ -6,35 +6,35 @@ using FlightGates.DataStore.Entities;
 
 namespace FlightGates.Services
 {
-    public interface IGateService
+    public interface IScheduleService
     {
-        IEnumerable<Gate> GetAll();
-        Gate Get(int id);
+        IEnumerable<Gate> GetAllGates();
+        Gate GetGate(int id);
         Flight GetFlight(int id);
         bool UpdateFlight(int id, int gateId, DateTime arrivalDateTime, DateTime? departureDateTime);
         bool CancelFlight(int id);
         bool ScheduleFlight(int gateId, DateTime arrivalDateTime, DateTime? departureDateTime);
     }
 
-    public class GateService : IGateService
+    public class ScheduleService : IScheduleService
     {
-        private readonly IGatesRepository _repository;
+        private readonly IGatesRepository _gateRepository;
         private readonly IFlightsRepository _flightsRepository;
 
-        public GateService(IGatesRepository repository, IFlightsRepository flightsRepository)
+        public ScheduleService(IGatesRepository gateRepository, IFlightsRepository flightsRepository)
         {
-            _repository = repository;
+            _gateRepository = gateRepository;
             _flightsRepository = flightsRepository;
         }
 
-        public IEnumerable<Gate> GetAll()
+        public IEnumerable<Gate> GetAllGates()
         {
-            return _repository.GetAll();
+            return _gateRepository.GetAll();
         }
 
-        public Gate Get(int id)
+        public Gate GetGate(int id)
         {
-            return _repository.GetById(id);
+            return _gateRepository.GetById(id);
         }
 
         public Flight GetFlight(int id)
@@ -47,7 +47,7 @@ namespace FlightGates.Services
             var flight = _flightsRepository.GetById(id);
             if (flight == null) return false;
 
-            var gate = _repository.GetById(gateId);
+            var gate = _gateRepository.GetById(gateId);
             if (gate == null) return false;
 
             if (departureDateTime == null)
@@ -85,7 +85,7 @@ namespace FlightGates.Services
                 departureDateTime = arrivalDateTime.AddMinutes(30);
 
             var flight = new Flight { ArrivalDateTime = arrivalDateTime, DepartureDateTime = departureDateTime.Value };
-            var gate = _repository.GetById(gateId);
+            var gate = _gateRepository.GetById(gateId);
             if (gate == null) return false;
 
             if (!GateHasSlotAvailable(gate, flight, arrivalDateTime, departureDateTime.Value))

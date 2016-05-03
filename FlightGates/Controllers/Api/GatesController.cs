@@ -8,11 +8,11 @@ namespace FlightGates.Controllers.Api
     [RoutePrefix("api/Gates")]
     public class GatesController : ApiController
     {
-        private readonly IGateService _gateService;
+        private readonly IScheduleService _scheduleService;
 
-        public GatesController(IGateService gateService)
+        public GatesController(IScheduleService scheduleService)
         {
-            _gateService = gateService;
+            _scheduleService = scheduleService;
         }
 
         [HttpGet]
@@ -20,7 +20,7 @@ namespace FlightGates.Controllers.Api
         // GET: Gates
         public IHttpActionResult Get()
         {
-            var models = _gateService.GetAll().Select(gate => new { gate.Id });
+            var models = _scheduleService.GetAllGates().Select(gate => new { gate.Id });
             return Ok(models);
         }
 
@@ -29,7 +29,7 @@ namespace FlightGates.Controllers.Api
         // GET: Gates
         public IHttpActionResult Get(int id, DateTime? date = null)
         {
-            var gate = _gateService.Get(id);
+            var gate = _scheduleService.GetGate(id);
             if (gate == null) return NotFound();
 
             if (date == null)
