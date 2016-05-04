@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="h2">
-            Gate <span ng-bind="Gate.Id"></span>
+            Gate <span ng-bind="Gate.Id"></span> <small>Schedule for today</small>
         </div>
         <span ng-show="Gate != null && Gate.Flights == 0">Gate has no flights scheduled.</span>
         <table class="table table-striped" ng-show="Gate != null && Gate.Flights.length > 0">
