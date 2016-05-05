@@ -29,17 +29,6 @@ namespace FlightGates.Tests.RepositoryTests
         }
 
         [TestMethod]
-        public void CanGetGateWithNoFlights()
-        {
-            var gateRepository = new GatesRepository(new DataContext());
-            var gate = gateRepository.GetById(2);
-
-            Assert.IsNotNull(gate);
-            Assert.IsNotNull(gate.Flights);
-            Assert.AreEqual(0, gate.Flights.Count);
-        }
-
-        [TestMethod]
         public void CanQueryNonExistingGate()
         {
             var gateRepository = new GatesRepository(new DataContext());

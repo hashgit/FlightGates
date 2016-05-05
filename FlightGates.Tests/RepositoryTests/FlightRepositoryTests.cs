@@ -22,7 +22,7 @@ namespace FlightGates.Tests.RepositoryTests
         public void CanQueryNonExistingFlight()
         {
             var flightRepository = new FlightsRepository(new DataContext());
-            var flight = flightRepository.GetById(10);
+            var flight = flightRepository.GetById(50);
 
             Assert.IsNull(flight);
         }
@@ -34,13 +34,13 @@ namespace FlightGates.Tests.RepositoryTests
             var flights = flightRepository.GetAll();
 
             Assert.IsNotNull(flights);
-            Assert.AreEqual(2, flights.Count);
+            Assert.AreEqual(20, flights.Count);
 
             // not adding it to a gate because we are only testing the flight repo
             var flight = new Flight {ArrivalDateTime = DateTime.Now, DepartureDateTime = DateTime.Now.AddHours(1)};
             flightRepository.Add(flight);
 
-            Assert.AreEqual(3, flight.Id);
+            Assert.AreEqual(21, flight.Id);
         }
 
         [TestMethod]
@@ -50,12 +50,12 @@ namespace FlightGates.Tests.RepositoryTests
             var flights = flightRepository.GetAll();
 
             Assert.IsNotNull(flights);
-            Assert.AreEqual(2, flights.Count);
+            Assert.AreEqual(20, flights.Count);
 
             flightRepository.Delete(flights.Single(f => f.Id == 1));
             flights = flightRepository.GetAll();
             Assert.IsNotNull(flights);
-            Assert.AreEqual(1, flights.Count);
+            Assert.AreEqual(19, flights.Count);
             Assert.AreEqual(2, flights.First().Id);
         }
     }
